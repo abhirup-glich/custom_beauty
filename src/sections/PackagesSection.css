@@ -1,0 +1,229 @@
+.packages-section {
+  background: var(--color-ivory);
+}
+
+.packages-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-5);
+}
+
+@media (min-width: 768px) {
+  .packages-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-6);
+    align-items: stretch;
+  }
+}
+
+.package-card {
+  position: relative;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-blush);
+  border-radius: var(--radius-xl);
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.package-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.package-card--popular {
+  background: var(--color-espresso);
+  border-color: var(--color-espresso);
+  box-shadow: var(--shadow-xl);
+}
+
+.package-card--popular .package-card__name,
+.package-card--popular .package-card__price,
+.package-card--popular .package-card__feature,
+.package-card--popular .package-card__duration {
+  color: var(--color-ivory);
+}
+
+.package-card--popular .package-card__desc {
+  color: rgba(250,247,242,0.7);
+}
+
+.package-card--popular .package-card__price-note {
+  color: rgba(250,247,242,0.5);
+}
+
+.package-card--popular .package-card__feature-icon {
+  background: rgba(250,247,242,0.15);
+  color: var(--color-champagne);
+}
+
+.package-card__popular-label {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-rose);
+  color: var(--color-white);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: var(--sp-1) var(--sp-4);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.package-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.package-card__name {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-rose);
+}
+
+.package-card--popular .package-card__name {
+  color: var(--color-champagne);
+}
+
+.package-card__price-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+}
+
+.package-card__price {
+  font-family: var(--font-serif);
+  font-size: 2.25rem;
+  font-weight: 600;
+  color: var(--color-espresso);
+  line-height: 1;
+}
+
+.package-card__price-note {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+}
+
+.package-card__desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+
+.package-card__duration {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  font-weight: 500;
+}
+
+.package-card__features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  flex: 1;
+}
+
+.package-card__feature {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-body);
+}
+
+.package-card__feature-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background: var(--color-blush);
+  color: var(--color-rose-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.package-card__cta {
+  width: 100%;
+  justify-content: center;
+}
+
+.package-card--popular .btn-primary {
+  background: var(--color-ivory);
+  color: var(--color-espresso);
+}
+
+.package-card--popular .btn-primary:hover {
+  background: var(--color-champagne);
+}
+
+/* ── New additions ── */
+.package-card__original-price {
+  font-size: var(--text-lg);
+  color: var(--color-text-xlight);
+  text-decoration: line-through;
+}
+
+.package-card--popular .package-card__original-price {
+  color: rgba(250,247,242,0.35);
+}
+
+.package-card__savings {
+  display: inline-block;
+  background: rgba(125,171,138,0.15);
+  color: #4a8a5c;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 2px var(--sp-2);
+  border-radius: var(--radius-full);
+}
+
+.package-card--popular .package-card__savings {
+  background: rgba(125,171,138,0.25);
+  color: #a8e6bc;
+}
+
+.package-card__actions {
+  display: flex;
+  gap: var(--sp-2);
+  align-items: center;
+}
+
+.package-card__cta {
+  flex: 1;
+  justify-content: center;
+}
+
+.package-card__wa {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(37,211,102,0.12);
+  color: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background var(--transition-fast);
+  border: 1.5px solid rgba(37,211,102,0.25);
+}
+
+.package-card__wa:hover {
+  background: rgba(37,211,102,0.22);
+}
+
+.package-card--popular .package-card__wa {
+  background: rgba(37,211,102,0.15);
+  border-color: rgba(37,211,102,0.3);
+}
+

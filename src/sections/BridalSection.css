@@ -1,0 +1,185 @@
+.bridal-section {
+  position: relative;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-block: var(--sp-16);
+}
+
+@media (min-width: 1024px) {
+  .bridal-section {
+    min-height: 700px;
+    padding-block: var(--sp-24);
+  }
+}
+
+.bridal-section__image-wrap {
+  position: absolute;
+  inset: 0;
+}
+
+.bridal-section__image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.bridal-section__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(36,29,27,0.7) 0%,
+    rgba(36,29,27,0.35) 60%,
+    rgba(36,29,27,0.1) 100%
+  );
+}
+
+.bridal-section__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.bridal-section__card {
+  max-width: 480px;
+  width: 100%;
+  padding: var(--sp-8) var(--sp-6);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  background: rgba(250,247,242,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+@media (min-width: 768px) {
+  .bridal-section__card {
+    padding: var(--sp-10) var(--sp-8);
+  }
+}
+
+.bridal-section__card .text-label {
+  color: var(--color-champagne);
+}
+
+.bridal-section__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 400;
+  color: var(--color-ivory);
+  line-height: 1.2;
+}
+
+.bridal-section__title em {
+  font-style: italic;
+  color: rgba(234,216,213,0.9);
+}
+
+.bridal-section__sub {
+  color: rgba(250,247,242,0.75);
+  font-size: var(--text-base);
+  line-height: 1.7;
+}
+
+.bridal-section__points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2) var(--sp-4);
+  font-size: var(--text-sm);
+  color: rgba(214,190,154,0.9);
+  font-weight: 500;
+}
+
+/* Form sheet */
+.bridal-form-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-modal);
+  background: var(--color-ivory);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  max-height: 92svh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: calc(var(--safe-bottom) + var(--sp-6));
+}
+
+@media (min-width: 768px) {
+  .bridal-form-sheet {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: 560px;
+    border-radius: var(--radius-xl);
+    bottom: var(--sp-8);
+    max-height: 90vh;
+  }
+}
+
+.bridal-form-sheet__body {
+  padding: var(--sp-6) var(--sp-5) var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.bridal-form-sheet__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: 500;
+  color: var(--color-espresso);
+}
+
+.bridal-form-sheet__sub {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  line-height: 1.6;
+  margin-top: calc(-1 * var(--sp-3));
+}
+
+.bridal-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+}
+
+@media (max-width: 480px) {
+  .form-row { grid-template-columns: 1fr; }
+}
+
+.bridal-form__success {
+  text-align: center;
+  padding: var(--sp-10) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.bridal-form__success-icon {
+  font-size: 3rem;
+}
+
+.bridal-form__success h4 {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  color: var(--color-espresso);
+}
+
+.bridal-form__success p {
+  font-size: var(--text-base);
+  color: var(--color-text-light);
+}

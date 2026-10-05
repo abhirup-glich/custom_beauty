@@ -1,0 +1,35 @@
+.float-book-btn {
+  position: fixed;
+  bottom: calc(var(--bottom-nav-height) + var(--safe-bottom) + var(--sp-4));
+  right: var(--sp-4);
+  z-index: calc(var(--z-nav) - 1);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0 var(--sp-5);
+  height: 52px;
+  background: var(--color-rose);
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(184,135,130,0.45);
+  transition: padding var(--transition-base), width var(--transition-base);
+  white-space: nowrap;
+}
+
+.float-book-btn.shrunk {
+  padding: 0;
+  width: 52px;
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .float-book-btn {
+    display: none;
+  }
+}

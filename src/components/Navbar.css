@@ -1,0 +1,210 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-nav);
+  padding-top: var(--safe-top);
+  transition: background var(--transition-base), box-shadow var(--transition-base);
+}
+
+.navbar--scrolled {
+  background: var(--color-navbar-bg, rgba(250, 247, 242, 0.92));
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  box-shadow: 0 1px 0 rgba(36,29,27,0.08);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-height);
+  gap: var(--sp-4);
+}
+
+/* Logo */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  text-decoration: none;
+}
+
+.navbar__logo-img {
+  height: 38px;
+  max-width: 140px;
+  object-fit: contain;
+  display: block;
+}
+
+.navbar__logo-icon {
+  color: var(--color-rose);
+  display: flex;
+}
+
+.navbar__logo-text {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-navbar-text, var(--color-espresso));
+  letter-spacing: -0.01em;
+}
+
+/* Desktop Nav Links */
+.navbar__links {
+  display: none;
+  align-items: center;
+  gap: var(--sp-6);
+  list-style: none;
+}
+
+@media (min-width: 1024px) {
+  .navbar__links {
+    display: flex;
+  }
+}
+
+.navbar__link {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-navbar-text, var(--color-text-body));
+  letter-spacing: 0.03em;
+  transition: color var(--transition-fast);
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--color-rose);
+  transition: width var(--transition-base);
+}
+
+.navbar__link:hover {
+  color: var(--color-espresso);
+}
+
+.navbar__link:hover::after {
+  width: 100%;
+}
+
+/* Actions */
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.navbar__book-btn {
+  display: none;
+  padding: 0.65rem var(--sp-5);
+  font-size: var(--text-sm);
+  min-height: 44px;
+}
+
+@media (min-width: 1024px) {
+  .navbar__book-btn {
+    display: inline-flex;
+  }
+}
+
+.navbar__menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: none;
+  color: var(--color-espresso);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.navbar__menu-btn:hover {
+  background: var(--color-blush);
+}
+
+@media (min-width: 1024px) {
+  .navbar__menu-btn {
+    display: none;
+  }
+}
+
+/* Mobile Menu */
+.mobile-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(36,29,27,0.4);
+  z-index: var(--z-overlay);
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(85vw, 360px);
+  background: var(--color-ivory);
+  z-index: var(--z-modal);
+  display: flex;
+  flex-direction: column;
+  padding: var(--safe-top) 0 calc(var(--safe-bottom) + var(--sp-8));
+  box-shadow: var(--shadow-xl);
+}
+
+.mobile-menu__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-5) var(--sp-6);
+  border-bottom: 1px solid var(--color-blush);
+  margin-bottom: var(--sp-4);
+}
+
+.mobile-menu__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--color-blush);
+  border: none;
+  color: var(--color-espresso);
+  cursor: pointer;
+}
+
+.mobile-menu__nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-4) var(--sp-6);
+  gap: var(--sp-1);
+}
+
+.mobile-menu__link {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--color-espresso);
+  padding: var(--sp-4) 0;
+  border-bottom: 1px solid var(--color-blush);
+  transition: color var(--transition-fast), padding-left var(--transition-fast);
+}
+
+.mobile-menu__link:hover {
+  color: var(--color-rose);
+  padding-left: var(--sp-3);
+}
+
+.mobile-menu__footer {
+  padding: var(--sp-6);
+}

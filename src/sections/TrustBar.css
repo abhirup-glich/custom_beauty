@@ -1,0 +1,211 @@
+.trust-bar {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-blush);
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.trust-bar::-webkit-scrollbar { display: none; }
+
+/* ── Items ── */
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  text-decoration: none;
+  color: var(--color-espresso);
+  transition: background var(--transition-fast);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.trust-item--btn {
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  text-align: left;
+}
+
+.trust-item:hover,
+.trust-item:focus-visible {
+  background: var(--color-ivory-dark);
+  outline: none;
+}
+
+.trust-item__icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-ivory-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-rose);
+  flex-shrink: 0;
+}
+
+.trust-item__icon--star {
+  background: rgba(214,190,154,0.2);
+  color: var(--color-champagne);
+}
+
+.trust-item__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.trust-item__text strong {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-espresso);
+}
+
+.trust-item__text span {
+  font-size: var(--text-xs);
+  color: var(--color-text-light);
+  line-height: 1.2;
+}
+
+/* Open/Closed indicator */
+.trust-item__status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.trust-item__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-text-xlight);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.trust-item__status.open .trust-item__dot {
+  background: var(--color-success);
+}
+
+.trust-item__status.closed .trust-item__dot {
+  background: var(--color-error);
+  animation: none;
+}
+
+.trust-item__status.open {
+  color: #4a8a5c;
+}
+
+.trust-item__status.closed {
+  color: var(--color-error);
+}
+
+/* Chevron */
+.trust-item__chevron {
+  color: var(--color-text-xlight);
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+  margin-left: var(--sp-1);
+}
+
+.trust-item__chevron.rotated {
+  transform: rotate(180deg);
+}
+
+/* Separator */
+.trust-bar__sep {
+  width: 1px;
+  background: var(--color-blush);
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+/* ── Hours dropdown panel ── */
+.trust-hours-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-white);
+  border: 1px solid var(--color-blush);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-sticky);
+  min-width: 260px;
+  overflow: hidden;
+  transform-origin: top center;
+}
+
+.trust-hours-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--color-blush);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-espresso);
+}
+
+.trust-hours-panel__header button {
+  color: var(--color-text-light);
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+.trust-hours-panel__header button:hover {
+  background: var(--color-ivory-dark);
+}
+
+.trust-hours-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-2) var(--sp-4);
+  font-size: var(--text-sm);
+  border-bottom: 1px solid var(--color-ivory-dark);
+}
+
+.trust-hours-row:last-child { border-bottom: none; }
+
+.trust-hours-row__days {
+  color: var(--color-text-body);
+}
+
+.trust-hours-row__time {
+  font-weight: 500;
+  color: var(--color-espresso);
+}
+
+.trust-hours-row__time.closed {
+  color: var(--color-text-xlight);
+  text-transform: uppercase;
+  font-size: var(--text-xs);
+  letter-spacing: 0.05em;
+}
+
+/* ── Desktop ── */
+@media (min-width: 768px) {
+  .trust-bar {
+    justify-content: center;
+    overflow: visible;
+  }
+
+  .trust-item {
+    padding: var(--sp-4) var(--sp-6);
+  }
+
+  .trust-hours-panel {
+    left: auto;
+    transform: none;
+    right: auto;
+  }
+}

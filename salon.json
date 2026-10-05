@@ -1,0 +1,166 @@
+{
+  "_readme": "This is the only file you edit per salon. Every field is explained in README.md. Keys starting with _ are ignored.",
+
+  "name": "Auréa Beauty",
+  "tagline": "Beauty that feels like you.",
+  "description": "Personalized beauty treatments designed to make you feel your absolute best.",
+  "siteUrl": "",
+  "favicon": "/favicon.svg",
+
+  "google": {
+    "placeId": "",
+    "mapsUrl": "",
+    "search": "",
+    "maxPhotos": 8
+  },
+
+  "phone": "+91 98765 43210",
+  "whatsapp": "919876543210",
+  "email": "hello@aureabeauty.com",
+
+  "address": {
+    "street": "42, Rose Lane, Bandra West",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "postalCode": "400050",
+    "country": "IN"
+  },
+
+  "timezone": "Asia/Kolkata",
+  "hours": {
+    "monday": "closed",
+    "tuesday": "10:00-20:00",
+    "wednesday": "10:00-20:00",
+    "thursday": "10:00-20:00",
+    "friday": "10:00-20:00",
+    "saturday": "10:00-20:00",
+    "sunday": "10:00-18:00"
+  },
+
+  "rating": 4.9,
+  "reviewCount": "500+",
+
+  "social": {
+    "instagram": "https://instagram.com/aureabeauty",
+    "facebook": "https://facebook.com/aureabeauty"
+  },
+
+  "currency": "INR",
+  "locale": "en-IN",
+
+  "theme": {
+    "accent": "#B88782",
+    "accentDark": "#9A6D68",
+    "dark": "#241D1B",
+    "background": "#FAF7F2"
+  },
+
+  "hero": {
+    "image": "/images/hero.jpg",
+    "rotatingWords": ["Glow", "Radiance", "Elegance", "Serenity", "Confidence"],
+    "secondLine": "Your Confidence.",
+    "subtext": "Professional beauty, hair & wellness services designed around you."
+  },
+
+  "about": {
+    "image": "/images/salon-interior.jpg",
+    "stats": [
+      { "value": 8, "suffix": "+", "label": "Years of Excellence" },
+      { "value": 500, "suffix": "+", "label": "Happy Clients" },
+      { "value": 15, "suffix": "", "label": "Expert Services" },
+      { "value": 4.9, "suffix": "★", "label": "Average Rating" }
+    ]
+  },
+
+  "cancellationPolicy": "Free cancellation up to 2 hours before your appointment.",
+
+  "booking": {
+    "daysAhead": 14,
+    "slotMinutes": 60
+  },
+  "googleCalendarId": "",
+
+  "services": [
+    { "category": "Hair", "name": "Precision Haircut", "price": 799, "duration": "45 min", "description": "Expert cut tailored to your face shape and lifestyle.", "benefits": ["Consultation", "Wash & condition", "Precision cut", "Blow dry & finish"] },
+    { "category": "Hair", "name": "Hair Color", "price": 2499, "duration": "90 min", "popular": true, "description": "Vibrant, lasting color using premium professional products.", "benefits": ["Strand test", "Custom color mix", "Color application", "Gloss treatment", "Style finish"] },
+    { "category": "Hair", "name": "Luxury Hair Spa", "price": 1299, "duration": "60 min", "description": "Deep conditioning treatment for silky, luminous hair.", "benefits": ["Scalp massage", "Deep conditioning", "Steam treatment", "Blow dry"] },
+    { "category": "Hair", "name": "Keratin Treatment", "price": 4999, "duration": "150 min", "popular": true, "description": "Frizz-free, smooth hair that lasts up to 3 months.", "benefits": ["Consultation", "Clarifying wash", "Keratin application", "Blow out", "Flat iron finish"] },
+
+    { "category": "Skin", "name": "Signature Facial", "price": 1499, "duration": "60 min", "popular": true, "description": "Deep cleansing and hydration for naturally radiant skin.", "benefits": ["Consultation", "Cleansing", "Exfoliation", "Massage", "Mask", "Moisturize"] },
+    { "category": "Skin", "name": "Skin Glow Treatment", "price": 2499, "duration": "75 min", "description": "Reveal luminous, dewy skin with our glow-boosting ritual.", "benefits": ["Skin analysis", "AHA peel", "Vitamin C mask", "LED therapy", "SPF finish"] },
+    { "category": "Skin", "name": "Express Cleanup", "price": 699, "duration": "30 min", "description": "Quick deep-pore cleanse for an instant fresh look.", "benefits": ["Cleansing", "Scrub", "Extraction", "Toner & moisturize"] },
+
+    { "category": "Nails", "name": "Luxury Manicure", "price": 799, "duration": "45 min", "description": "Beautifully shaped nails with a pristine, long-lasting finish.", "benefits": ["Shaping", "Cuticle care", "Hand massage", "Polish application"] },
+    { "category": "Nails", "name": "Spa Pedicure", "price": 999, "duration": "60 min", "description": "Relaxing pedicure treatment for soft, beautiful feet.", "benefits": ["Foot soak", "Scrub", "Callus removal", "Massage", "Polish"] },
+    { "category": "Nails", "name": "Nail Art", "price": 1499, "duration": "75 min", "popular": true, "description": "Custom nail art designs — from subtle to statement.", "benefits": ["Design consultation", "Base prep", "Custom art", "Top coat seal"] },
+
+    { "category": "Makeup", "name": "Party Makeup", "price": 2499, "duration": "60 min", "description": "Glamorous, long-lasting makeup for any celebration.", "benefits": ["Skin prep", "Foundation & contour", "Eye makeup", "Lip finish", "Setting spray"] },
+    { "category": "Makeup", "name": "Bridal Makeup", "price": 8999, "duration": "150 min", "popular": true, "description": "Your dream bridal look crafted with precision and love.", "benefits": ["Trial session", "HD foundation", "Airbrush finish", "Hair styling", "Draping assist"] },
+
+    { "category": "Spa", "name": "Body Spa", "price": 3999, "duration": "90 min", "description": "Full-body relaxation ritual with aromatic oils and expert touch.", "benefits": ["Aromatherapy", "Body scrub", "Full-body massage", "Wrap treatment"] },
+    { "category": "Spa", "name": "Head Massage", "price": 799, "duration": "30 min", "description": "Therapeutic scalp and head massage to melt away stress.", "benefits": ["Hot oil treatment", "Scalp massage", "Neck & shoulder release"] }
+  ],
+
+  "packages": [
+    { "name": "GLOW", "price": 1999, "duration": "2 hrs", "description": "The perfect refresh for glowing, healthy skin.", "features": ["Express Cleanup", "Signature Facial", "Head Massage"] },
+    { "name": "SIGNATURE", "price": 3499, "duration": "3.5 hrs", "popular": true, "description": "Our most-loved package for a complete beauty reset.", "features": ["Premium Facial", "Luxury Hair Spa", "Manicure", "Pedicure"] },
+    { "name": "BRIDAL", "price": 14999, "duration": "5+ hrs", "priceNote": "Starting price", "description": "Everything you need to look your most radiant on your big day.", "features": ["Bridal Makeup", "Hair Styling", "Skin Preparation Facial", "Trial Consultation", "Draping Assistance"] }
+  ],
+
+  "team": [
+    { "name": "Aarohi Sharma", "role": "Senior Hair Artist", "specialization": "Hair Color · Styling · Bridal", "experience": "8 years", "image": "/images/team-aarohi.jpg", "bio": "Aarohi brings a creative eye and technical precision to every look. Known for her transformative color work." },
+    { "name": "Priya Menon", "role": "Lead Skin Therapist", "specialization": "Facials · Chemical Peels · Skin Analysis", "experience": "6 years", "image": "/images/team-priya.jpg", "bio": "Priya combines science and intuition to craft personalized skincare journeys. Clients love her gentle approach." },
+    { "name": "Kavya Nair", "role": "Bridal Makeup Specialist", "specialization": "Bridal · Party · Editorial", "experience": "7 years", "bio": "With a portfolio spanning 300+ brides, Kavya crafts looks that photograph beautifully and last through the day." },
+    { "name": "Ritu Verma", "role": "Nail Artist", "specialization": "Nail Art · Gel · Extensions", "experience": "5 years", "bio": "Ritu turns nails into miniature works of art. Her precision and creativity have earned her a devoted clientele." }
+  ],
+
+  "testimonials": [
+    { "name": "Priya K.", "role": "Regular Client", "rating": 5, "text": "Absolutely loved the experience. The team understood exactly what I wanted and delivered beyond my expectations. My skin has never looked better!" },
+    { "name": "Sneha R.", "role": "Bridal Client", "rating": 5, "text": "Kavya did my bridal makeup and I was absolutely stunning. Every photo looks incredible. Worth every rupee!" },
+    { "name": "Meera T.", "role": "Regular Client", "rating": 5, "text": "I've been coming here for 2 years. The Signature Facial is my monthly ritual — it's the only place I trust with my skin." },
+    { "name": "Ananya S.", "role": "New Client", "rating": 5, "text": "First visit and already obsessed! The ambiance is incredible and Aarohi transformed my hair completely. Booked my next appointment before leaving." },
+    { "name": "Riya M.", "role": "Regular Client", "rating": 5, "text": "The nail art service is exceptional. Ritu created exactly the design I had in mind — precise, beautiful, and it lasted 3 weeks." }
+  ],
+
+  "gallery": [
+    { "src": "/images/service-hair.jpg", "alt": "Luxury hair styling", "category": "Hair" },
+    { "src": "/images/service-facial.jpg", "alt": "Signature facial treatment", "category": "Skin" },
+    { "src": "/images/service-nails.jpg", "alt": "Elegant nail art", "category": "Nails" },
+    { "src": "/images/service-bridal.jpg", "alt": "Bridal makeup look", "category": "Bridal" },
+    { "src": "/images/salon-interior.jpg", "alt": "Salon interior", "category": "Salon" },
+    { "src": "/images/service-spa.jpg", "alt": "Relaxing body spa", "category": "Salon" },
+    { "src": "/images/team-aarohi.jpg", "alt": "Senior hair artist at work", "category": "Hair" },
+    { "src": "/images/team-priya.jpg", "alt": "Skin therapist treatment", "category": "Skin" }
+  ],
+
+  "transformations": [
+    { "category": "Hair", "label": "Balayage Transformation", "before": "/images/service-hair.jpg", "after": "/images/team-aarohi.jpg" },
+    { "category": "Makeup", "label": "Glam Makeover", "before": "/images/service-facial.jpg", "after": "/images/service-bridal.jpg" },
+    { "category": "Bridal", "label": "Bridal Look", "before": "/images/team-priya.jpg", "after": "/images/service-bridal.jpg" },
+    { "category": "Skin", "label": "Glow Treatment", "before": "/images/service-spa.jpg", "after": "/images/service-facial.jpg" }
+  ],
+
+  "bridal": {
+    "image": "/images/service-bridal.jpg",
+    "points": ["Bridal Makeup", "Hair Styling", "Skin Prep", "Trial Session"],
+    "eventTypes": ["Wedding", "Engagement", "Reception", "Mehendi", "Sangeet"],
+    "budgetOptions": ["₹10,000 – ₹25,000", "₹25,000 – ₹50,000", "₹50,000 – ₹1,00,000", "₹1,00,000+"]
+  },
+
+  "admins": [
+    {
+      "id": "adm_7k9x2m41",
+      "email": "admin_7k9x@parlor.com",
+      "password": "P@ss!9x8K#2026",
+      "name": "Admin 1",
+      "role": "Salon Administrator"
+    },
+    {
+      "id": "adm_3v8q1w95",
+      "email": "admin_3v8q@parlor.com",
+      "password": "W#7zL$2qM*2026",
+      "name": "Admin 2",
+      "role": "Salon Administrator"
+    }
+  ]
+}

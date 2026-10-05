@@ -1,0 +1,22 @@
+.whatsapp-btn {
+  position: fixed;
+  bottom: calc(var(--bottom-nav-height) + var(--safe-bottom) + var(--sp-4));
+  left: var(--sp-4);
+  z-index: calc(var(--z-nav) - 1);
+  width: 52px;
+  height: 52px;
+  background: #25D366;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  text-decoration: none;
+}
+
+@media (min-width: 1024px) {
+  .whatsapp-btn {
+    bottom: var(--sp-8);
+    left: var(--sp-8);
+  }
+}
