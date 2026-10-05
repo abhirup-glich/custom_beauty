@@ -5,31 +5,27 @@ import { X } from 'lucide-react';
 import salon, { whatsappLink } from '../salon';
 import './BridalSection.css';
 
-const { bridal } = salon;
-
-const FIELDS = [
-  ['name', 'Name'],
-  ['phone', 'Phone'],
-  ['email', 'Email'],
-  ['date', 'Event date'],
-  ['type', 'Event type'],
-  ['functions', 'Functions'],
-  ['budget', 'Budget'],
-  ['notes', 'Notes'],
-];
-
-export default function BridalSection() {
+export default function BridalSection({ salonData }) {
   const [showForm, setShowForm] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  // Sends the enquiry to the salon's WhatsApp — there is no backend.
+  const salonName = salonData?.name || salon.name;
+  const whatsappNum = salonData?.whatsapp || salon.whatsapp;
+  const bridal = {
+    ...salon.bridal,
+    ...(salonData?.bridal || {})
+  };
+
+  // Sends the enquiry to the salon's WhatsApp
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const lines = FIELDS
       .filter(([key]) => String(data.get(key) || '').trim())
       .map(([key, label]) => `${label}: ${String(data.get(key)).trim()}`);
-    window.open(whatsappLink(`Hi ${salon.name}! I'd like a bridal consultation.\n\n${lines.join('\n')}`), '_blank', 'noopener');
+    const msg = `Hi ${salonName}! I'd like a bridal consultation.\n\n${lines.join('\n')}`;
+    const url = `https://wa.me/${whatsappNum}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank', 'noopener');
     setSubmitted(true);
     setTimeout(() => { setShowForm(false); setSubmitted(false); }, 3000);
   };
@@ -37,7 +33,7 @@ export default function BridalSection() {
   return (
     <section className="bridal-section" id="bridal">
       <div className="bridal-section__image-wrap">
-        <img src={bridal.image} alt={`Bridal look by ${salon.name}`} loading="lazy" />
+        <img src={bridal.image || '/images/service-bridal.jpg'} alt={`Bridal look by ${salonName}`} loading="lazy" />
         <div className="bridal-section__overlay" />
       </div>
 

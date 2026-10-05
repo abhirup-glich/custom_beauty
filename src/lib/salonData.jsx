@@ -1,8 +1,42 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import { supabase } from './supabase';
 import salonDefault from 'virtual:salon';
+import { parseHoursObject, groupHours } from './hours.js';
 
 // ── helpers ──────────────────────────────────────────────────────────────────
+const LOCAL_STORAGE_KEY = 'parlor_custom_beauty_data';
+
+export function getStoredLocalData() {
+  if (typeof window === 'undefined') return {};
+  try {
+    const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (err) {
+    console.warn('Failed to parse localStorage salon data:', err);
+    return {};
+  }
+}
+
+export function saveStoredLocalData(partial) {
+  if (typeof window === 'undefined') return;
+  try {
+    const existing = getStoredLocalData();
+    const updated = { ...existing, ...partial };
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updated));
+  } catch (err) {
+    console.warn('Failed to save to localStorage:', err);
+  }
+}
+
+export function clearStoredLocalData() {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+  } catch (err) {
+    console.warn('Failed to clear localStorage:', err);
+  }
+}
+
 
 /**
  * Convert Google Drive links, Dropbox, local public folder paths, or public URLs
@@ -104,8 +138,8 @@ export function applyFavicon(rawUrl) {
 
 const SalonDataContext = createContext(null);
 
-function mergeSalonData(siteSettings, heroSettings, aboutSettings, services, packages, gallery) {
-  const base = { ...salonDefault };
+function mergeSalonData(siteSettings, heroSettings, aboutSettings, services, packages, gallery, bridalData, teamData, transData, testData) {
+  const base = JSON.parse(JSON.stringify(salonDefault));
 
   // Site settings override
   if (siteSettings) {
@@ -118,8 +152,26 @@ function mergeSalonData(siteSettings, heroSettings, aboutSettings, services, pac
     if (siteSettings.address)     base.address = { full: siteSettings.address, ...base.address };
     if (siteSettings.currency)    base.currency = siteSettings.currency;
     if (siteSettings.locale)      base.locale = siteSettings.locale;
-    if (siteSettings.rating)      base.rating = siteSettings.rating;
+    if (siteSettings.rating)      base.rating = Number(siteSettings.rating);
     if (siteSettings.review_count) base.reviewCount = siteSettings.review_count;
+    if (siteSettings.cancellation_policy) base.cancellationPolicy = siteSettings.cancellation_policy;
+    if (siteSettings.days_ahead || siteSettings.slot_minutes) {
+      base.booking = {
+        ...base.booking,
+        ...(siteSettings.days_ahead && { daysAhead: Number(siteSettings.days_ahead) }),
+        ...(siteSettings.slot_minutes && { slotMinutes: Number(siteSettings.slot_minutes) }),
+      };
+    }
+    if (siteSettings.hours) {
+      const parsed = parseHoursObject(siteSettings.hours);
+      if (parsed) {
+        base.hours = parsed;
+        base.hoursDisplay = groupHours(parsed);
+      }
+    }
+    if (siteSettings.headings) {
+      base.headings = { ...(base.headings || {}), ...siteSettings.headings };
+    }
     if (siteSettings.instagram || siteSettings.facebook) {
       base.social = {
         ...(siteSettings.instagram && { instagram: siteSettings.instagram }),
@@ -176,7 +228,7 @@ function mergeSalonData(siteSettings, heroSettings, aboutSettings, services, pac
         description: s.description,
         benefits: s.benefits || [],
         popular: s.popular,
-        image: driveUrl(s.image_url) || base.hero?.image,
+        image: driveUrl(s.image_url || s.image) || base.hero?.image,
       }));
     base.services = mapped;
     const cats = ['All', ...new Set(mapped.map(s => s.category))];
@@ -216,12 +268,121 @@ function mergeSalonData(siteSettings, heroSettings, aboutSettings, services, pac
     base.galleryCategories = cats;
   }
 
+  // Bridal
+  if (bridalData) {
+    base.bridal = {
+      ...(base.bridal || {}),
+      ...(bridalData.enabled !== undefined && { enabled: bridalData.enabled }),
+      ...(bridalData.image && { image: driveUrl(bridalData.image) }),
+      ...(bridalData.heading && { heading: bridalData.heading }),
+      ...(bridalData.second_line && { secondLine: bridalData.second_line }),
+      ...(bridalData.secondLine && { secondLine: bridalData.secondLine }),
+      ...(bridalData.text && { text: bridalData.text }),
+      ...(bridalData.points && { points: bridalData.points }),
+      ...(bridalData.eventTypes && { eventTypes: bridalData.eventTypes }),
+      ...(bridalData.event_types && { eventTypes: bridalData.event_types }),
+      ...(bridalData.budgetOptions && { budgetOptions: bridalData.budgetOptions }),
+      ...(bridalData.budget_options && { budgetOptions: bridalData.budget_options }),
+    };
+  }
+
+  // Team
+  if (teamData?.length > 0) {
+    base.team = teamData
+      .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0))
+      .map(m => ({
+        id: m.id || m.name,
+        name: m.name,
+        role: m.role,
+        specialization: m.specialization || '',
+        experience: m.experience || '',
+        bio: m.bio || '',
+        image: driveUrl(m.image || m.image_url) || '/images/team-priya.jpg',
+      }));
+  }
+
+  // Transformations
+  if (transData?.length > 0) {
+    base.transformations = transData
+      .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0))
+      .map((t, idx) => ({
+        id: t.id || `t-${idx}`,
+        label: t.label || 'Glow Makeover',
+        category: t.category || 'Hair',
+        before: driveUrl(t.before || t.before_image),
+        after: driveUrl(t.after || t.after_image),
+        beforeAlt: t.beforeAlt || `Before: ${t.label || ''}`,
+        afterAlt: t.afterAlt || `After: ${t.label || ''}`,
+      }));
+  }
+
+  // Testimonials
+  if (testData?.length > 0) {
+    base.testimonials = testData
+      .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0))
+      .map((t, idx) => ({
+        id: t.id || `testi-${idx}`,
+        name: t.name,
+        role: t.role || 'Client',
+        rating: Number(t.rating) || 5,
+        text: t.text,
+      }));
+  }
+
+  // Apply localStorage overrides (offline / free zero-config mode)
+  const local = getStoredLocalData();
+  if (local && Object.keys(local).length > 0) {
+    if (local.site) Object.assign(base, local.site);
+    if (local.hours) {
+      const parsed = parseHoursObject(local.hours);
+      if (parsed) {
+        base.hours = parsed;
+        base.hoursDisplay = groupHours(parsed);
+      }
+    }
+    if (local.cancellationPolicy) base.cancellationPolicy = local.cancellationPolicy;
+    if (local.booking) base.booking = { ...base.booking, ...local.booking };
+    if (local.headings) base.headings = { ...(base.headings || {}), ...local.headings };
+    if (local.hero) base.hero = { ...base.hero, ...local.hero };
+    if (local.about) base.about = { ...base.about, ...local.about };
+    if (local.bridal) base.bridal = { ...base.bridal, ...local.bridal };
+    if (local.team) base.team = local.team;
+    if (local.transformations) base.transformations = local.transformations;
+    if (local.testimonials) base.testimonials = local.testimonials;
+    if (local.services) {
+      base.services = local.services;
+      base.serviceCategories = ['All', ...new Set(local.services.map(s => s.category))];
+    }
+    if (local.packages) base.packages = local.packages;
+    if (local.gallery) {
+      base.gallery = local.gallery;
+      base.galleryCategories = ['All', ...new Set(local.gallery.map(g => g.category))];
+    }
+    if (local.theme) base.theme = { ...base.theme, ...local.theme };
+  }
+
   return base;
 }
 
 export function SalonDataProvider({ children }) {
-  const [salonData, setSalonData] = useState(salonDefault);
+  const [salonData, setSalonData] = useState(() => {
+    // Initial state merges salonDefault with any offline localStorage data instantly
+    const local = getStoredLocalData();
+    if (local && Object.keys(local).length > 0) {
+      return mergeSalonData(null, null, null, null, null, null, null, null, null, null);
+    }
+    return salonDefault;
+  });
   const [loading, setLoading] = useState(true);
+
+  // Sync helper that updates state and stores to localStorage so edits are 100% persistent and free
+  const updateSalonData = (partialData) => {
+    setSalonData((prev) => {
+      const next = { ...prev, ...partialData };
+      saveStoredLocalData(partialData);
+      return next;
+    });
+  };
 
   useEffect(() => {
     if (!supabase) {
@@ -238,18 +399,38 @@ export function SalonDataProvider({ children }) {
           { data: services },
           { data: packages },
           { data: gallery },
+          bridalRes,
+          teamRes,
+          transRes,
+          testiRes,
         ] = await Promise.all([
-          supabase.from('site_settings').select('*').eq('id', 'main').single(),
-          supabase.from('hero_settings').select('*').eq('id', 'main').single(),
-          supabase.from('about_settings').select('*').eq('id', 'main').single(),
-          supabase.from('services').select('*').order('sort_order'),
-          supabase.from('packages').select('*').order('sort_order'),
-          supabase.from('gallery').select('*').order('sort_order'),
+          supabase.from('site_settings').select('*').eq('id', 'main').single().catch(() => ({ data: null })),
+          supabase.from('hero_settings').select('*').eq('id', 'main').single().catch(() => ({ data: null })),
+          supabase.from('about_settings').select('*').eq('id', 'main').single().catch(() => ({ data: null })),
+          supabase.from('services').select('*').order('sort_order').catch(() => ({ data: null })),
+          supabase.from('packages').select('*').order('sort_order').catch(() => ({ data: null })),
+          supabase.from('gallery').select('*').order('sort_order').catch(() => ({ data: null })),
+          supabase.from('bridal_settings').select('*').eq('id', 'main').single().catch(() => ({ data: null })),
+          supabase.from('team').select('*').order('sort_order').catch(() => ({ data: null })),
+          supabase.from('transformations').select('*').order('sort_order').catch(() => ({ data: null })),
+          supabase.from('testimonials').select('*').order('sort_order').catch(() => ({ data: null })),
         ]);
 
-        setSalonData(mergeSalonData(site, hero, about, services, packages, gallery));
+        const merged = mergeSalonData(
+          site,
+          hero,
+          about,
+          services,
+          packages,
+          gallery,
+          bridalRes?.data,
+          teamRes?.data,
+          transRes?.data,
+          testiRes?.data
+        );
+        setSalonData(merged);
       } catch (err) {
-        console.error('Failed to load Supabase data, using defaults:', err);
+        console.error('Failed to load Supabase data, using defaults/local:', err);
       } finally {
         setLoading(false);
       }
@@ -284,7 +465,7 @@ export function SalonDataProvider({ children }) {
   }, [salonData?.favicon]);
 
   return (
-    <SalonDataContext.Provider value={{ salonData, loading, setSalonData }}>
+    <SalonDataContext.Provider value={{ salonData, loading, setSalonData, updateSalonData }}>
       {children}
     </SalonDataContext.Provider>
   );

@@ -24,10 +24,10 @@ export default function ServicesSection({ onBookClick, salonData }) {
     <section className="services-section section" id="services">
       <div className="container">
         <div className="section-header">
-          <span className="text-label">Our Services</span>
-          <h2 className="text-section-title">Beauty, your way.</h2>
+          <span className="text-label">{salonData?.headings?.services_label || 'Our Services'}</span>
+          <h2 className="text-section-title">{salonData?.headings?.services_title || 'Beauty, your way.'}</h2>
           <div className="divider" />
-          <p>Discover treatments crafted around you, by specialists who care.</p>
+          <p>{salonData?.headings?.services_sub || 'Discover treatments crafted around you, by specialists who care.'}</p>
         </div>
       </div>
 

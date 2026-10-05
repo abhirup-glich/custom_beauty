@@ -6,16 +6,25 @@ import './Navbar.css';
 export default function Navbar({ onBookClick, salonData }) {
   const salon = salonData || {};
   const sections = {
-    gallery:  (salon.gallery?.length ?? 0) > 0,
-    packages: (salon.packages?.length ?? 0) > 0,
-    about:    true,
+    services:        (salon.services?.length ?? 0) > 0,
+    about:           true,
+    packages:        (salon.packages?.length ?? 0) > 0,
+    bridal:          salon.bridal?.enabled !== false && Boolean(salon.bridal),
+    transformations: (salon.transformations?.length ?? 0) > 0,
+    team:            (salon.team?.length ?? 0) > 0,
+    testimonials:    (salon.testimonials?.length ?? 0) > 0,
+    gallery:         (salon.gallery?.length ?? 0) > 0,
   };
 
   const navLinks = [
-    { label: 'Services', href: '#services', show: true },
-    { label: 'Gallery', href: '#gallery', show: sections.gallery },
-    { label: 'Packages', href: '#packages', show: sections.packages },
-    { label: 'About', href: '#experience', show: sections.about },
+    { label: 'Services',        href: '#services',        show: sections.services },
+    { label: 'Packages',        href: '#packages',        show: sections.packages },
+    { label: 'Bridal',          href: '#bridal',          show: sections.bridal },
+    { label: 'Before & After',  href: '#before-after',    show: sections.transformations },
+    { label: 'Specialists',     href: '#team',            show: sections.team },
+    { label: 'Reviews',         href: '#testimonials',    show: sections.testimonials },
+    { label: 'Gallery',         href: '#gallery',         show: sections.gallery },
+    { label: 'Contact',         href: '#contact',         show: true },
   ].filter((link) => link.show);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);

@@ -15,6 +15,9 @@ import ServicesSection from './sections/ServicesSection';
 import ExperienceSection from './sections/ExperienceSection';
 import PackagesSection from './sections/PackagesSection';
 import BridalSection from './sections/BridalSection';
+import BeforeAfterSection from './sections/BeforeAfterSection';
+import TeamSection from './sections/TeamSection';
+import Testimonials from './sections/Testimonials';
 import Gallery from './sections/Gallery';
 import LocationSection from './sections/LocationSection';
 import BookingSection from './sections/BookingSection';
@@ -69,7 +72,10 @@ export default function App() {
 
   const sections = {
     packages:        (salonData.packages?.length ?? 0) > 0,
-    bridal:          Boolean(salonData.bridal),
+    bridal:          salonData.bridal?.enabled !== false && Boolean(salonData.bridal),
+    transformations: (salonData.transformations?.length ?? 0) > 0,
+    team:            (salonData.team?.length ?? 0) > 0,
+    testimonials:    (salonData.testimonials?.length ?? 0) > 0,
     gallery:         (salonData.gallery?.length ?? 0) > 0,
   };
 
@@ -88,6 +94,9 @@ export default function App() {
         <ExperienceSection salonData={salonData} />
         {sections.packages && <PackagesSection onBookClick={openBooking} salonData={salonData} />}
         {sections.bridal && <BridalSection salonData={salonData} />}
+        {sections.transformations && <BeforeAfterSection salonData={salonData} />}
+        {sections.team && <TeamSection salonData={salonData} />}
+        {sections.testimonials && <Testimonials salonData={salonData} />}
         {sections.gallery && <Gallery salonData={salonData} />}
         <LocationSection salonData={salonData} />
       </main>

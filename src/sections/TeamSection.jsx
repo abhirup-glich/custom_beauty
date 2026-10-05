@@ -5,9 +5,9 @@ import Avatar from '../components/Avatar';
 import { X, Award } from 'lucide-react';
 import './TeamSection.css';
 
-export default function TeamSection() {
+export default function TeamSection({ salonData }) {
   const [selectedMember, setSelectedMember] = useState(null);
-  const { team } = salon;
+  const team = salonData?.team || salon.team || [];
 
   return (
     <section className="team-section section" id="team">

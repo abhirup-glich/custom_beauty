@@ -14,9 +14,8 @@ export default function LocationSection({ salonData }) {
     <section className="location-section section" id="contact">
       <div className="container">
         <div className="section-header">
-          <span className="text-label">Find Us</span>
-          <h2 className="text-section-title">Come visit
-            <br />your sanctuary.</h2>
+          <span className="text-label">{salonData?.headings?.contact_label || 'Find Us'}</span>
+          <h2 className="text-section-title">{salonData?.headings?.contact_title || 'Come visit your sanctuary.'}</h2>
           <div className="divider" />
         </div>
 

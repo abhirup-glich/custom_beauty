@@ -14,10 +14,10 @@ export default function PackagesSection({ onBookClick, salonData }) {
     <section className="packages-section section" id="packages">
       <div className="container">
         <div className="section-header section-header--center">
-          <span className="text-label">Curated Packages</span>
-          <h2 className="text-section-title">Complete beauty,<br />all in one.</h2>
+          <span className="text-label">{salonData?.headings?.packages_label || 'Curated Packages'}</span>
+          <h2 className="text-section-title">{salonData?.headings?.packages_title || 'Complete beauty, all in one.'}</h2>
           <div className="divider divider--center" />
-          <p>Handpicked service combinations for a total beauty experience — at special package prices.</p>
+          <p>{salonData?.headings?.packages_sub || 'Handpicked service combinations for a total beauty experience — at special package prices.'}</p>
         </div>
 
         <div className="packages-grid">

@@ -7,30 +7,33 @@ import { createGoogleCalendarUrl } from '../../lib/googleCalendar';
 import Avatar from '../Avatar';
 import './BookingFlow.css';
 
-const { services, team } = salon;
-const formatDate = (d) => d?.toLocaleDateString(salon.locale, { weekday: 'long', day: 'numeric', month: 'long' });
+const formatDate = (d, locale = 'en-IN') => d?.toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long' });
 
-// There is no backend: the booking is handed to the salon as a pre-filled WhatsApp message.
-function bookingWhatsAppUrl({ service, professional, date, time, customer }) {
-  return whatsappLink(
-    `Hi ${salon.name}! I'd like to book an appointment:\n\n` +
+// Formats WhatsApp URL with dynamic salon info
+function getBookingWhatsAppUrl({ service, professional, date, time, customer }, currentSalon) {
+  const salonName = currentSalon?.name || salon.name;
+  const whatsappNum = currentSalon?.whatsapp || salon.whatsapp;
+  const msg = (
+    `Hi ${salonName}! I'd like to book an appointment:\n\n` +
     `✂ *${service?.name}* (${formatPrice(service?.price)})\n` +
     (professional ? `👤 ${professional.name}\n` : '') +
-    `📅 ${formatDate(date)}, ${time}\n\n` +
+    `📅 ${formatDate(date, currentSalon?.locale)}, ${time}\n\n` +
     `Name: ${customer.name}\nPhone: ${customer.phone}` +
     (customer.email ? `\nEmail: ${customer.email}` : '') +
     `\n\nPlease confirm my appointment. Thank you!`
   );
+  return `https://wa.me/${whatsappNum}?text=${encodeURIComponent(msg)}`;
 }
 
 // ── Step Components ──────────────────────────────────────────
 
-function StepService({ selected, onSelect }) {
+function StepService({ servicesList, selected, onSelect }) {
+  const list = servicesList && servicesList.length > 0 ? servicesList : salon.services;
   return (
     <div className="booking-step">
       <h3 className="booking-step__title">Choose a Service</h3>
       <div className="booking-step__service-list">
-        {services.map((s) => (
+        {list.map((s) => (
           <button
             key={s.id}
             className={`booking-service-item ${selected?.id === s.id ? 'selected' : ''}`}
@@ -54,10 +57,11 @@ function StepService({ selected, onSelect }) {
   );
 }
 
-function StepProfessional({ selected, onSelect }) {
+function StepProfessional({ teamList, salonAboutImg, selected, onSelect }) {
+  const proList = teamList && teamList.length > 0 ? teamList : salon.team;
   const allPros = [
-    { id: 'any', name: 'Any Available', role: 'Best match for your service', image: salon.about.image },
-    ...team,
+    { id: 'any', name: 'Any Available', role: 'Best match for your service', image: salonAboutImg || salon.about?.image },
+    ...proList,
   ];
   return (
     <div className="booking-step">
@@ -322,17 +326,22 @@ function BookingSuccess({ booking, onClose }) {
 
 // ── Main Booking Flow ─────────────────────────────────────────
 
-const STEPS = [
-  { key: 'service', label: 'Service' },
-  team.length > 0 && { key: 'professional', label: 'Professional' },
-  { key: 'date', label: 'Date' },
-  { key: 'time', label: 'Time' },
-  { key: 'customer', label: 'Your Info' },
-  { key: 'confirm', label: 'Confirm' },
-].filter(Boolean);
-const LAST = STEPS.length - 1;
+export default function BookingFlow({ initialService, onClose, salonData }) {
+  const currentSalon = salonData || salon;
+  const servicesList = currentSalon.services || [];
+  const teamList = currentSalon.team || [];
+  const cancellationPolicy = currentSalon.cancellationPolicy || salon.cancellationPolicy;
 
-export default function BookingFlow({ initialService, onClose }) {
+  const STEPS = [
+    { key: 'service', label: 'Service' },
+    teamList.length > 0 && { key: 'professional', label: 'Professional' },
+    { key: 'date', label: 'Date' },
+    { key: 'time', label: 'Time' },
+    { key: 'customer', label: 'Your Info' },
+    { key: 'confirm', label: 'Confirm' },
+  ].filter(Boolean);
+  const LAST = STEPS.length - 1;
+
   const [step, setStep] = useState(initialService ? 1 : 0);
   const [booking, setBooking] = useState({
     service: initialService || null,
@@ -343,7 +352,7 @@ export default function BookingFlow({ initialService, onClose }) {
   });
   const [booked, setBooked] = useState(false);
   const bodyRef = useRef(null);
-  const current = STEPS[step].key;
+  const current = STEPS[step]?.key || 'service';
 
   const canProceed = () => {
     switch (current) {
@@ -383,7 +392,7 @@ export default function BookingFlow({ initialService, onClose }) {
         console.error('Failed to save booking to database:', err);
       }
 
-      window.open(bookingWhatsAppUrl(booking), '_blank', 'noopener');
+      window.open(getBookingWhatsAppUrl(booking, currentSalon), '_blank', 'noopener');
       setBooked(true);
       return;
     }
@@ -425,7 +434,7 @@ export default function BookingFlow({ initialService, onClose }) {
 
       {/* Step label */}
       {!booked && (
-        <div className="booking-flow__step-label">{STEPS[step].label}</div>
+        <div className="booking-flow__step-label">{STEPS[step]?.label}</div>
       )}
 
       {/* Content */}
@@ -443,12 +452,25 @@ export default function BookingFlow({ initialService, onClose }) {
               exit={{ opacity: 0, x: -30 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
-              {current === 'service' && <StepService selected={booking.service} onSelect={(s) => setBooking((b) => ({ ...b, service: s }))} />}
-              {current === 'professional' && <StepProfessional selected={booking.professional} onSelect={(p) => setBooking((b) => ({ ...b, professional: p }))} />}
+              {current === 'service' && (
+                <StepService
+                  servicesList={servicesList}
+                  selected={booking.service}
+                  onSelect={(s) => setBooking((b) => ({ ...b, service: s }))}
+                />
+              )}
+              {current === 'professional' && (
+                <StepProfessional
+                  teamList={teamList}
+                  salonAboutImg={currentSalon.about?.image}
+                  selected={booking.professional}
+                  onSelect={(p) => setBooking((b) => ({ ...b, professional: p }))}
+                />
+              )}
               {current === 'date' && <StepDate selected={booking.date} onSelect={(d) => setBooking((b) => ({ ...b, date: d, time: null }))} />}
               {current === 'time' && <StepTime date={booking.date} selected={booking.time} onSelect={(t) => setBooking((b) => ({ ...b, time: t }))} />}
               {current === 'customer' && <StepCustomer data={booking.customer} onChange={(c) => setBooking((b) => ({ ...b, customer: c }))} />}
-              {current === 'confirm' && <StepConfirmation booking={booking} />}
+              {current === 'confirm' && <StepConfirmation booking={booking} policy={cancellationPolicy} />}
             </motion.div>
           )}
         </AnimatePresence>

@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Clock, Phone, Star, ChevronDown, X } from 'lucide-react';
 import { isOpenNow } from '../salon';
+import { getIsOpenNow } from '../lib/hours';
 import './TrustBar.css';
 
 export default function TrustBar({ salonData }) {
   const salon = salonData || {};
   const [hoursOpen, setHoursOpen] = useState(false);
-  const open = isOpenNow();
+  const open = salon.hours ? getIsOpenNow(salon.hours, salon.timezone) : isOpenNow();
 
   const { address = {} } = salon;
   const fullAddress = address.full || (address.street ? `${address.street}, ${address.city}` : '');

@@ -26,7 +26,7 @@ export default function BookingSection({ isOpen, initialService, onClose }) {
             id="booking"
           >
             <div className="booking-modal__handle" />
-            <BookingFlow initialService={initialService} onClose={onClose} />
+            <BookingFlow initialService={initialService} onClose={onClose} salonData={salonData} />
           </motion.div>
         </>
       )}

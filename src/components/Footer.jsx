@@ -8,7 +8,10 @@ export default function Footer({ salonData }) {
   const year = new Date().getFullYear();
   const fullAddress = address.full || (address.street ? `${address.street}, ${address.city}` : '');
   const hasPackages = (salon.packages?.length ?? 0) > 0;
-  const hasBridal = Boolean(salon.bridal);
+  const hasBridal = salon.bridal?.enabled !== false && Boolean(salon.bridal);
+  const hasTransformations = (salon.transformations?.length ?? 0) > 0;
+  const hasTeam = (salon.team?.length ?? 0) > 0;
+  const hasTestimonials = (salon.testimonials?.length ?? 0) > 0;
   const hasGallery = (salon.gallery?.length ?? 0) > 0;
 
   return (
@@ -44,6 +47,9 @@ export default function Footer({ salonData }) {
             <a href="#services">Services</a>
             {hasPackages && <a href="#packages">Packages</a>}
             {hasBridal && <a href="#bridal">Bridal</a>}
+            {hasTransformations && <a href="#before-after">Transformations</a>}
+            {hasTeam && <a href="#team">Specialists</a>}
+            {hasTestimonials && <a href="#testimonials">Reviews</a>}
             {hasGallery && <a href="#gallery">Gallery</a>}
           </nav>
         </div>
