@@ -11,8 +11,6 @@ export default function Navbar({ onBookClick, salonData }) {
     packages:        (salon.packages?.length ?? 0) > 0,
     bridal:          salon.bridal?.enabled !== false && Boolean(salon.bridal),
     transformations: (salon.transformations?.length ?? 0) > 0,
-    team:            (salon.team?.length ?? 0) > 0,
-    testimonials:    (salon.testimonials?.length ?? 0) > 0,
     gallery:         (salon.gallery?.length ?? 0) > 0,
   };
 
@@ -21,8 +19,6 @@ export default function Navbar({ onBookClick, salonData }) {
     { label: 'Packages',        href: '#packages',        show: sections.packages },
     { label: 'Bridal',          href: '#bridal',          show: sections.bridal },
     { label: 'Before & After',  href: '#before-after',    show: sections.transformations },
-    { label: 'Specialists',     href: '#team',            show: sections.team },
-    { label: 'Reviews',         href: '#testimonials',    show: sections.testimonials },
     { label: 'Gallery',         href: '#gallery',         show: sections.gallery },
     { label: 'Contact',         href: '#contact',         show: true },
   ].filter((link) => link.show);
