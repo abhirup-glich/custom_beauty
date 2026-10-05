@@ -9,18 +9,39 @@ export default function AdminApp() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!supabase) { setLoading(false); return; }
+    let mounted = true;
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setLoading(false);
-    });
+    async function initAuth() {
+      try {
+        if (supabase?.auth?.getSession) {
+          const { data } = await supabase.auth.getSession();
+          if (mounted) setSession(data?.session || null);
+        }
+      } catch (err) {
+        console.warn('Auth session check:', err);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    }
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
+    initAuth();
 
-    return () => subscription.unsubscribe();
+    let subscription = null;
+    try {
+      if (supabase?.auth?.onAuthStateChange) {
+        const subRes = supabase.auth.onAuthStateChange((_event, newSession) => {
+          if (mounted) setSession(newSession);
+        });
+        subscription = subRes?.data?.subscription;
+      }
+    } catch (err) {
+      console.warn('Auth listener setup:', err);
+    }
+
+    return () => {
+      mounted = false;
+      if (subscription?.unsubscribe) subscription.unsubscribe();
+    };
   }, []);
 
   if (loading) {
@@ -28,19 +49,6 @@ export default function AdminApp() {
       <div className="admin-loading">
         <div className="admin-loading__spinner" />
         <p>Loading admin panel…</p>
-      </div>
-    );
-  }
-
-  if (!supabase) {
-    return (
-      <div className="admin-error-screen">
-        <div className="admin-error-card">
-          <div className="admin-error-icon">⚙️</div>
-          <h2>Supabase Not Configured</h2>
-          <p>Add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> to your <code>.env</code> file and restart the dev server.</p>
-          <a href="/" className="admin-btn admin-btn--primary">← Back to Site</a>
-        </div>
       </div>
     );
   }

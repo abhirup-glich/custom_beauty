@@ -47,6 +47,7 @@ export default function Footer({ salonData }) {
             {hasBridal && <a href="#bridal">Bridal</a>}
             {hasTransformations && <a href="#before-after">Transformations</a>}
             {hasGallery && <a href="#gallery">Gallery</a>}
+            <a href="/admin" style={{ opacity: 0.9, fontWeight: 500 }}>Salon Admin ↗</a>
           </nav>
         </div>
 
@@ -72,8 +73,9 @@ export default function Footer({ salonData }) {
         </div>
       </div>
 
-      <div className="footer__bottom container">
+      <div className="footer__bottom container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <p>© {year} {salon.name}. All rights reserved.</p>
+        <a href="/admin" style={{ color: 'inherit', opacity: 0.7, fontSize: '0.85rem', textDecoration: 'none' }}>Salon Admin Portal ↗</a>
       </div>
     </footer>
   );

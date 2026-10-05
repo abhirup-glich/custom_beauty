@@ -20,9 +20,19 @@ import Gallery from './sections/Gallery';
 import LocationSection from './sections/LocationSection';
 import BookingSection from './sections/BookingSection';
 
-export default function App() {
+export default function App({ initialOpenBooking = false }) {
   const { salonData, loading } = useSalonData();
-  const [bookingOpen, setBookingOpen] = useState(false);
+  const [bookingOpen, setBookingOpen] = useState(() => {
+    if (initialOpenBooking) return true;
+    if (typeof window !== 'undefined') {
+      return (
+        window.location.pathname === '/book' ||
+        window.location.hash === '#book' ||
+        window.location.hash === '#booking'
+      );
+    }
+    return false;
+  });
   const [initialService, setInitialService] = useState(null);
   const [activeSection, setActiveSection] = useState('home');
 
@@ -36,7 +46,20 @@ export default function App() {
     setBookingOpen(false);
     setInitialService(null);
     document.body.style.overflow = '';
+    if (typeof window !== 'undefined' && window.location.pathname === '/book') {
+      window.history.pushState(null, '', '/');
+    }
   };
+
+  useEffect(() => {
+    const handleHash = () => {
+      if (window.location.hash === '#book' || window.location.hash === '#booking') {
+        openBooking();
+      }
+    };
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
 
   useEffect(() => {
     const tracked = [

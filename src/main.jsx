@@ -15,6 +15,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/admin/*" element={<AdminApp />} />
           <Route path="/superadmin" element={<AdminApp />} />
           <Route path="/superadmin/*" element={<AdminApp />} />
+          <Route path="/book" element={<App initialOpenBooking={true} />} />
           <Route path="/*" element={<App />} />
         </Routes>
       </SalonDataProvider>

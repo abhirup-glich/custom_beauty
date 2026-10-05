@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import BookingFlow from '../components/booking/BookingFlow';
 import './BookingSection.css';
 
-export default function BookingSection({ isOpen, initialService, onClose }) {
+export default function BookingSection({ isOpen, initialService, onClose, salonData }) {
   return (
     <AnimatePresence>
       {isOpen && (
