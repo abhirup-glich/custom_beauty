@@ -105,7 +105,8 @@ export default function BeforeAfterSection({ salonData }) {
   const items = allItems.filter((item) => !item.category || item.category === selectedCategory);
 
   return (
-    <section className="ba-section section" id="transformations">
+    <section className="ba-section section" id="before-after">
+      <div id="transformations" style={{ position: 'relative', top: '-80px', height: 0 }} />
       <div className="container">
         <div className="section-header section-header--center">
           <span className="text-label">Transformations</span>

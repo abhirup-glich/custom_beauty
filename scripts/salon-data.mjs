@@ -251,31 +251,9 @@ export function resolveSalon(manual, google) {
     };
   }), 'packages');
 
-  const team = uniqueIds(list(manual.team, 'team').map((t, i) => {
-    const memberName = requireString(t, 'name', `team[${i}]`);
-    return {
-      id: t.id || slug(memberName),
-      name: memberName,
-      role: t.role || '',
-      specialization: t.specialization || '',
-      experience: t.experience || '',
-      bio: t.bio || '',
-      image: t.image || null,
-    };
-  }), 'team');
-
-  // Testimonials: your own list wins; otherwise real Google reviews (4★ and up).
-  const manualTestimonials = list(manual.testimonials, 'testimonials').map((t, i) => ({
-    name: requireString(t, 'name', `testimonials[${i}]`),
-    role: t.role || '',
-    rating: Math.min(5, Math.max(1, Math.round(t.rating ?? 5))),
-    text: requireString(t, 'text', `testimonials[${i}]`),
-  }));
-  const googleTestimonials = (g.reviews || [])
-    .filter((r) => r.text && r.rating >= 4)
-    .map((r) => ({ name: r.name || 'Google user', role: r.when ? `Google review · ${r.when}` : 'Google review', rating: r.rating, text: r.text }));
-  const testimonials = manualTestimonials.length ? manualTestimonials : googleTestimonials;
-  const testimonialsSource = manualTestimonials.length ? 'manual' : googleTestimonials.length ? 'google' : null;
+  const team = [];
+  const testimonials = [];
+  const testimonialsSource = null;
 
   // Gallery: your own list wins; otherwise photos downloaded from the Google listing.
   const manualGallery = list(manual.gallery, 'gallery').map((img, i) => ({

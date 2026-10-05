@@ -9,7 +9,9 @@ export default function Footer({ salonData }) {
   const fullAddress = address.full || (address.street ? `${address.street}, ${address.city}` : '');
   const hasPackages = (salon.packages?.length ?? 0) > 0;
   const hasBridal = salon.bridal?.enabled !== false && Boolean(salon.bridal);
-  const hasTransformations = (salon.transformations?.length ?? 0) > 0;
+  const hasTransformations = Array.isArray(salon.transformations)
+    ? salon.transformations.length > 0
+    : ((salon.transformations?.items?.length ?? 0) > 0);
   const hasGallery = (salon.gallery?.length ?? 0) > 0;
 
   return (

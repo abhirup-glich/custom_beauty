@@ -107,21 +107,6 @@
     { "name": "BRIDAL", "price": 14999, "duration": "5+ hrs", "priceNote": "Starting price", "description": "Everything you need to look your most radiant on your big day.", "features": ["Bridal Makeup", "Hair Styling", "Skin Preparation Facial", "Trial Consultation", "Draping Assistance"] }
   ],
 
-  "team": [
-    { "name": "Aarohi Sharma", "role": "Senior Hair Artist", "specialization": "Hair Color · Styling · Bridal", "experience": "8 years", "image": "/images/team-aarohi.jpg", "bio": "Aarohi brings a creative eye and technical precision to every look. Known for her transformative color work." },
-    { "name": "Priya Menon", "role": "Lead Skin Therapist", "specialization": "Facials · Chemical Peels · Skin Analysis", "experience": "6 years", "image": "/images/team-priya.jpg", "bio": "Priya combines science and intuition to craft personalized skincare journeys. Clients love her gentle approach." },
-    { "name": "Kavya Nair", "role": "Bridal Makeup Specialist", "specialization": "Bridal · Party · Editorial", "experience": "7 years", "bio": "With a portfolio spanning 300+ brides, Kavya crafts looks that photograph beautifully and last through the day." },
-    { "name": "Ritu Verma", "role": "Nail Artist", "specialization": "Nail Art · Gel · Extensions", "experience": "5 years", "bio": "Ritu turns nails into miniature works of art. Her precision and creativity have earned her a devoted clientele." }
-  ],
-
-  "testimonials": [
-    { "name": "Priya K.", "role": "Regular Client", "rating": 5, "text": "Absolutely loved the experience. The team understood exactly what I wanted and delivered beyond my expectations. My skin has never looked better!" },
-    { "name": "Sneha R.", "role": "Bridal Client", "rating": 5, "text": "Kavya did my bridal makeup and I was absolutely stunning. Every photo looks incredible. Worth every rupee!" },
-    { "name": "Meera T.", "role": "Regular Client", "rating": 5, "text": "I've been coming here for 2 years. The Signature Facial is my monthly ritual — it's the only place I trust with my skin." },
-    { "name": "Ananya S.", "role": "New Client", "rating": 5, "text": "First visit and already obsessed! The ambiance is incredible and Aarohi transformed my hair completely. Booked my next appointment before leaving." },
-    { "name": "Riya M.", "role": "Regular Client", "rating": 5, "text": "The nail art service is exceptional. Ritu created exactly the design I had in mind — precise, beautiful, and it lasted 3 weeks." }
-  ],
-
   "gallery": [
     { "src": "/images/service-hair.jpg", "alt": "Luxury hair styling", "category": "Hair" },
     { "src": "/images/service-facial.jpg", "alt": "Signature facial treatment", "category": "Skin" },

@@ -63,10 +63,11 @@ export default function App({ initialOpenBooking = false }) {
 
   useEffect(() => {
     const tracked = [
-      { id: 'home',     el: document.getElementById('home') },
-      { id: 'services', el: document.getElementById('services') },
-      { id: 'gallery',  el: document.getElementById('gallery') },
-      { id: 'contact',  el: document.getElementById('contact') },
+      { id: 'home',         el: document.getElementById('home') },
+      { id: 'services',     el: document.getElementById('services') },
+      { id: 'before-after', el: document.getElementById('before-after') },
+      { id: 'gallery',      el: document.getElementById('gallery') },
+      { id: 'contact',      el: document.getElementById('contact') },
     ];
 
     const observer = new IntersectionObserver(
@@ -91,10 +92,14 @@ export default function App({ initialOpenBooking = false }) {
     );
   }
 
+  const transCount = Array.isArray(salonData.transformations)
+    ? salonData.transformations.length
+    : (salonData.transformations?.items?.length ?? 0);
+
   const sections = {
     packages:        (salonData.packages?.length ?? 0) > 0,
     bridal:          salonData.bridal?.enabled !== false && Boolean(salonData.bridal),
-    transformations: (salonData.transformations?.length ?? 0) > 0,
+    transformations: transCount > 0,
     gallery:         (salonData.gallery?.length ?? 0) > 0,
   };
 

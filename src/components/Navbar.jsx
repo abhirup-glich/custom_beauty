@@ -5,12 +5,16 @@ import './Navbar.css';
 
 export default function Navbar({ onBookClick, salonData }) {
   const salon = salonData || {};
+  const transCount = Array.isArray(salon.transformations)
+    ? salon.transformations.length
+    : (salon.transformations?.items?.length ?? 0);
+
   const sections = {
     services:        (salon.services?.length ?? 0) > 0,
     about:           true,
     packages:        (salon.packages?.length ?? 0) > 0,
     bridal:          salon.bridal?.enabled !== false && Boolean(salon.bridal),
-    transformations: (salon.transformations?.length ?? 0) > 0,
+    transformations: transCount > 0,
     gallery:         (salon.gallery?.length ?? 0) > 0,
   };
 

@@ -52,12 +52,14 @@ export function timeSlotsFor(date) {
 }
 
 // Sections only appear when salon.json has content for them.
+const transCount = Array.isArray(salon.transformations)
+  ? salon.transformations.length
+  : (salon.transformations?.items?.length ?? 0);
+
 export const sections = {
   about: true,
-  transformations: salon.transformations.items.length > 0,
-  packages: salon.packages.length > 0,
+  transformations: transCount > 0,
+  packages: (salon.packages?.length ?? 0) > 0,
   bridal: Boolean(salon.bridal),
-  team: salon.team.length > 0,
-  gallery: salon.gallery.length > 0,
-  testimonials: salon.testimonials.length > 0,
+  gallery: (salon.gallery?.length ?? 0) > 0,
 };

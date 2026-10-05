@@ -10,10 +10,8 @@ import HeroEditor from './tabs/HeroEditor';
 import ServicesEditor from './tabs/ServicesEditor';
 import PackagesEditor from './tabs/PackagesEditor';
 import BridalEditor from './tabs/BridalEditor';
-import TeamEditor from './tabs/TeamEditor';
 import TransformationsEditor from './tabs/TransformationsEditor';
 import AboutEditor from './tabs/AboutEditor';
-import TestimonialsEditor from './tabs/TestimonialsEditor';
 import GalleryEditor from './tabs/GalleryEditor';
 
 const TABS = [
@@ -25,10 +23,8 @@ const TABS = [
   { id: 'services',        label: 'Services Menu',           icon: '💅', component: ServicesEditor },
   { id: 'packages',        label: 'Packages',                icon: '📦', component: PackagesEditor },
   { id: 'bridal',          label: 'Bridal Studio',           icon: '💍', component: BridalEditor },
-  { id: 'team',            label: 'Specialists & Team',      icon: '👥', component: TeamEditor },
   { id: 'transformations', label: 'Before & After',          icon: '✨', component: TransformationsEditor },
   { id: 'about',           label: 'About Sanctuary',         icon: '🌿', component: AboutEditor },
-  { id: 'testimonials',    label: 'Client Reviews',          icon: '💬', component: TestimonialsEditor },
   { id: 'gallery',         label: 'Gallery Photos',          icon: '📷', component: GalleryEditor },
 ];
 
@@ -77,11 +73,6 @@ export default function AdminDashboard({ session }) {
             </div>
             <div className="admin-sidebar__user-info">
               <div className="admin-sidebar__user-email" title={email}>{email}</div>
-              {session?.user?.id && (
-                <div style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  ID: {session.user.id}
-                </div>
-              )}
             </div>
           </div>
           <button className="admin-sidebar__logout" onClick={handleLogout} id="admin-logout-btn">

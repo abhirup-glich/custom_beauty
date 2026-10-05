@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { supabase, ADMIN_USERS } from '../lib/supabase';
+import { supabase } from '../lib/supabase';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -84,11 +84,11 @@ export default function AdminLogin() {
         ) : (
           <form onSubmit={handleLogin} className="admin-login__form">
             <div className="admin-form-group">
-              <label className="admin-label">Email or Admin ID</label>
+              <label className="admin-label">Email</label>
               <input
                 type="text"
                 className="admin-input"
-                placeholder="adm_... or email@parlor.com"
+                placeholder="admin@parlor.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -119,65 +119,6 @@ export default function AdminLogin() {
             <button type="button" className="admin-btn admin-btn--ghost" onClick={() => setMode('forgot')}>
               Forgot password?
             </button>
-
-            {/* Quick-fill credentials for the 2 Admin Accounts */}
-            <div style={{ marginTop: '1.25rem', paddingTop: '1.25rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.6rem' }}>
-                <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  ⚡ Configured Admins (2 Accounts)
-                </span>
-                <span style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.4)' }}>
-                  Click to auto-fill
-                </span>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {ADMIN_USERS.map((admin, idx) => (
-                  <button
-                    key={admin.id}
-                    type="button"
-                    className="admin-btn admin-btn--secondary"
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'flex-start',
-                      padding: '0.6rem 0.75rem',
-                      textAlign: 'left',
-                      fontSize: '0.76rem',
-                      lineHeight: '1.35',
-                      background: 'rgba(255,255,255,0.05)',
-                      border: '1px solid rgba(255,255,255,0.12)',
-                      borderRadius: '8px',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                    }}
-                    onClick={() => {
-                      setEmail(admin.email);
-                      setPassword(admin.password);
-                    }}
-                    id={`quick-fill-admin-${idx + 1}`}
-                  >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center', marginBottom: '2px' }}>
-                      <strong style={{ color: '#fff', fontSize: '0.8rem' }}>
-                        {admin.name || `Admin ${idx + 1}`}
-                      </strong>
-                      <span style={{ fontSize: '0.7rem', color: 'var(--accent, #B88782)', fontWeight: 600 }}>
-                        Auto-fill ↗
-                      </span>
-                    </div>
-                    <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.72rem', fontFamily: 'monospace' }}>
-                      ID: <span style={{ color: '#E8C5C8' }}>{admin.id}</span>
-                    </div>
-                    <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.72rem' }}>
-                      Email: <span>{admin.email}</span>
-                    </div>
-                    <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.7rem', marginTop: '2px' }}>
-                      Password: <code style={{ color: '#d4a843', background: 'rgba(0,0,0,0.25)', padding: '1px 4px', borderRadius: '3px' }}>{admin.password}</code>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
           </form>
         )}
 

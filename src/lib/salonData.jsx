@@ -346,9 +346,9 @@ function mergeSalonData(siteSettings, heroSettings, aboutSettings, services, pac
     if (local.hero) base.hero = { ...base.hero, ...local.hero };
     if (local.about) base.about = { ...base.about, ...local.about };
     if (local.bridal) base.bridal = { ...base.bridal, ...local.bridal };
-    if (local.team) base.team = local.team;
     if (local.transformations) base.transformations = local.transformations;
-    if (local.testimonials) base.testimonials = local.testimonials;
+    base.team = [];
+    base.testimonials = [];
     if (local.services) {
       base.services = local.services;
       base.serviceCategories = ['All', ...new Set(local.services.map(s => s.category))];
